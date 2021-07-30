@@ -1,0 +1,189 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ¦ÌVision V5.25.3.0
+Copyright (C) 2018 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: 1 zhengyc, 11, LIC=NQQMA-1Q7XB-63RMB-2U4VS-PD1AU-9MK41
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.18
+Toolchain Path:  E:\keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 1 (build 61)
+Assembler:       Armasm.exe V5.06 update 1 (build 61)
+Linker/Locator:  ArmLink.exe V5.06 update 1 (build 61)
+Library Manager: ArmAr.exe V5.06 update 1 (build 61)
+Hex Converter:   FromElf.exe V5.06 update 1 (build 61)
+CPU DLL:         SARMCM3.DLL V5.18
+Dialog DLL:      DCM.DLL V1.13.6.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.18.0
+Dialog DLL:      TCM.DLL V1.14.8.0
+ 
+<h2>Project:</h2>
+F:\stm32f103zet6\smartCar\MDK-ARM\smartCar.uvprojx
+Project File Date:  07/30/2021
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 1 (build 61)', folder: 'E:\keil_v5\ARM\ARMCC\Bin'
+Build target 'smartCar'
+assembling startup_stm32f103xb.s...
+compiling IIC.c...
+compiling mpu6050.c...
+compiling control.c...
+..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Core\Src\CONTROL\control.c(27): warning:  #1-D: last line of file ends without a newline
+  }
+..\Core\Src\CONTROL\control.c: 3 warnings, 0 errors
+compiling oled.c...
+compiling gpio.c...
+compiling main.c...
+..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Src/main.c(99): warning:  #550-D: variable "Uart2_RxFlag1" was set but never used
+  static uint8_t Uart2_RxFlag1 = 0;
+../Core/Src/main.c(101): warning:  #550-D: variable "Cw" was set but never used
+  static uint8_t Cx=0,Cy=0,Cw=0,Ch=0;
+../Core/Src/main.c(101): warning:  #550-D: variable "Ch" was set but never used
+  static uint8_t Cx=0,Cy=0,Cw=0,Ch=0;
+../Core/Src/main.c: 6 warnings, 0 errors
+compiling i2c.c...
+compiling exti.c...
+..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Core\Src\EXTI\exti.c(25): warning:  #1-D: last line of file ends without a newline
+  // }
+..\Core\Src\EXTI\exti.c: 4 warnings, 0 errors
+compiling inv_mpu_dmp_motion_driver.c...
+compiling inv_mpu.c...
+compiling motor.c...
+..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Core\Src\MOTOR\motor.c(11): warning:  #188-D: enumerated type mixed with another type
+      HAL_GPIO_WritePin(
+PIOB, 
+PIO_PIN_12, RESET);
+..\Core\Src\MOTOR\motor.c(12): warning:  #188-D: enumerated type mixed with another type
+      HAL_GPIO_WritePin(
+PIOB, 
+PIO_PIN_13, RESET);
+..\Core\Src\MOTOR\motor.c(13): warning:  #188-D: enumerated type mixed with another type
+      HAL_GPIO_WritePin(
+PIOB, 
+PIO_PIN_14, RESET);
+..\Core\Src\MOTOR\motor.c(14): warning:  #188-D: enumerated type mixed with another type
+      HAL_GPIO_WritePin(
+PIOB, 
+PIO_PIN_15, RESET);
+..\Core\Src\MOTOR\motor.c(25): warning:  #188-D: enumerated type mixed with another type
+          HAL_GPIO_WritePin(
+PIOB, 
+PIO_PIN_15, SET);
+..\Core\Src\MOTOR\motor.c(26): warning:  #188-D: enumerated type mixed with another type
+          HAL_GPIO_WritePin(
+PIOB, 
+PIO_PIN_14, RESET);
+..\Core\Src\MOTOR\motor.c(28): warning:  #188-D: enumerated type mixed with another type
+          HAL_GPIO_WritePin(
+PIOB, 
+PIO_PIN_15, RESET);
+..\Core\Src\MOTOR\motor.c(29): warning:  #188-D: enumerated type mixed with another type
+          HAL_GPIO_WritePin(
+PIOB, 
+PIO_PIN_14, SET);
+..\Core\Src\MOTOR\motor.c(34): warning:  #188-D: enumerated type mixed with another type
+          HAL_GPIO_WritePin(
+PIOB, 
+PIO_PIN_13, RESET);
+..\Core\Src\MOTOR\motor.c(35): warning:  #188-D: enumerated type mixed with another type
+          HAL_GPIO_WritePin(
+PIOB, 
+PIO_PIN_12, SET);
+..\Core\Src\MOTOR\motor.c(37): warning:  #188-D: enumerated type mixed with another type
+          HAL_GPIO_WritePin(
+PIOB, 
+PIO_PIN_13, SET);
+..\Core\Src\MOTOR\motor.c(38): warning:  #188-D: enumerated type mixed with another type
+          HAL_GPIO_WritePin(
+PIOB, 
+PIO_PIN_12, RESET);
+..\Core\Src\MOTOR\motor.c(86): warning:  #1-D: last line of file ends without a newline
+  	
+..\Core\Src\MOTOR\motor.c: 15 warnings, 0 errors
+compiling stm32f1xx_hal_gpio_ex.c...
+compiling stm32f1xx_hal.c...
+compiling stm32f1xx_it.c...
+..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Src/stm32f1xx_it.c: 2 warnings, 0 errors
+compiling stm32f1xx_ll_gpio.c...
+compiling stm32f1xx_hal_i2c.c...
+compiling tim.c...
+..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Src/tim.c: 2 warnings, 0 errors
+compiling usart.c...
+compiling stm32f1xx_hal_rcc.c...
+compiling stm32f1xx_hal_msp.c...
+compiling stm32f1xx_hal_rcc_ex.c...
+compiling stm32f1xx_hal_gpio.c...
+compiling stm32f1xx_hal_dma.c...
+compiling stm32f1xx_hal_cortex.c...
+compiling stm32f1xx_hal_pwr.c...
+compiling stm32f1xx_hal_exti.c...
+compiling system_stm32f1xx.c...
+compiling stm32f1xx_ll_exti.c...
+compiling stm32f1xx_ll_rcc.c...
+compiling stm32f1xx_hal_flash_ex.c...
+compiling stm32f1xx_hal_flash.c...
+compiling stm32f1xx_ll_utils.c...
+compiling stm32f1xx_hal_uart.c...
+compiling stm32f1xx_hal_tim_ex.c...
+compiling stm32f1xx_hal_tim.c...
+linking...
+Program Size: Code=26956 RO-data=4900 RW-data=152 ZI-data=2720  
+FromELF: creating hex file...
+"smartCar\smartCar.axf" - 0 Error(s), 32 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.4.5.0.pack
+                ARM.CMSIS.4.5.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 4.3.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F1xx_DFP.2.3.0.pack
+                Keil.STM32F1xx_DFP.2.3.0
+                STMicroelectronics STM32F1 Series Device Support, Drivers and Examples
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_smartCar
+  E:\keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include
+  E:\keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:4.3.0
+Build Time Elapsed:  00:00:18
+</pre>
+</body>
+</html>

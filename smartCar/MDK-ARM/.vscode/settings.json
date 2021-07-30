@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "gpio.h": "c",
+        "MPUIIC.H": "cpp",
+        "main.h": "c",
+        "motor.h": "c",
+        "sys.h": "c",
+        "inv_mpu_dmp_motion_driver.h": "c",
+        "control.h": "c",
+        "mpu6050.h": "c",
+        "iic.h": "c",
+        "usart.h": "c",
+        "stm32f1xx_it.h": "c",
+        "tim.h": "c",
+        "exti.h": "c",
+        "string.h": "c",
+        "stm32f1xx_hal.h": "c",
+        "oled.h": "c"
+    }
+}
