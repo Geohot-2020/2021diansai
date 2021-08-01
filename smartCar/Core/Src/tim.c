@@ -411,6 +411,12 @@ void HAL_TIM_Encoder_MspDeInit(TIM_HandleTypeDef* tim_encoderHandle)
 }
 
 /* USER CODE BEGIN 1 */
+
+/*********************************************************************************
+ * 函数功能： 读取编码器值
+ * 入口参数： 定时器名，tim2、4
+ * 返回值：   无
+**********************************************************************************/
 int Read_Encoder(uint8_t TIMX)
 {
   int Encoder_TIM;
@@ -422,6 +428,35 @@ int Read_Encoder(uint8_t TIMX)
     default:Encoder_TIM=0;
   }
   return Encoder_TIM;
+}
+
+/*********************************************************************************
+ * 函数功能： 控制函数，每隔10ms对采的样进行处理
+ * 入口参数： 定时器名，tim3
+ * 返回值：   无
+**********************************************************************************/
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  if (htim == (&htim3))
+  {
+    Light_Sens=Lsens_Get_Val();                   //获取光电传感器值
+    mpu_dmp_get_data(&pitch, &roll, &yaw);	      //必须要用while等待，才能读取成功
+		MPU_Get_Accelerometer(&aacx,&aacy, &aacz);		//得到加速度传感器数据
+		MPU_Get_Gyroscope(&gyrox, &gyroy, &gyroz);		//得到陀螺仪数据
+    // printf("\n\r%f\r\n", pitch);							  //串口1输出pitch信息
+    enc1=-Read_Encoder(2);
+    enc2=Read_Encoder(4);
+    // printf("\n\renc1: %d, enc2: %d\r\n",enc1,enc2);
+    // Balance_Pwm=balance_UP(pitch,Mechanical_angle,gyroy);
+    Seek_Pwm=seek_Beacon(Cx);                     //openmv
+    Moto1=Balance_Pwm-Seek_Pwm;                   
+    Moto2=Balance_Pwm+Seek_Pwm;
+    Lock_Pwm();                                   //限幅
+    Set_Pwm(Moto1,Moto2);                         //赋值
+
+    // printf("cx: %d, cy:%d",Cx,Cy);
+  }
+
 }
 
 

@@ -2,7 +2,7 @@
 #define OLED_H
 
 #include <stdint.h>
-
+#include "sys.h"
 
 // the I2C address of oled
 #define OLED_I2C_ADDRESS    0x78
@@ -33,6 +33,7 @@ extern void OLED_show_string(uint8_t row, uint8_t col, uint8_t *chr);
 extern void OLED_printf(uint8_t row, uint8_t col, const char *fmt,...);
 extern void OLED_refresh_gram(void);
 extern void OLED_LOGO(void);
+void OLED_show(void);
 #endif
 
 

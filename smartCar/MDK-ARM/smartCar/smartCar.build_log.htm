@@ -22,56 +22,34 @@ Dialog DLL:      TCM.DLL V1.14.8.0
  
 <h2>Project:</h2>
 F:\stm32f103zet6\smartCar\MDK-ARM\smartCar.uvprojx
-Project File Date:  07/30/2021
+Project File Date:  08/01/2021
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 1 (build 61)', folder: 'E:\keil_v5\ARM\ARMCC\Bin'
 Build target 'smartCar'
-assembling startup_stm32f103xb.s...
-compiling IIC.c...
-compiling mpu6050.c...
-compiling control.c...
-..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\Core\Src\CONTROL\control.c(27): warning:  #1-D: last line of file ends without a newline
-  }
-..\Core\Src\CONTROL\control.c: 3 warnings, 0 errors
-compiling oled.c...
-compiling gpio.c...
+compiling adc.c...
+..\Core\Src\SYS\sys.h(61): warning:  #1-D: last line of file ends without a newline
+  ******************************************************************************/
+..\Core\Src\SYS\sys.h(61): warning:  #1-D: last line of file ends without a newline
+  ******************************************************************************/
+../Core/Src/adc.c: 2 warnings, 0 errors
 compiling main.c...
-..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
-  #endif
-../Core/Src/main.c(99): warning:  #550-D: variable "Uart2_RxFlag1" was set but never used
-  static uint8_t Uart2_RxFlag1 = 0;
-../Core/Src/main.c(101): warning:  #550-D: variable "Cw" was set but never used
-  static uint8_t Cx=0,Cy=0,Cw=0,Ch=0;
-../Core/Src/main.c(101): warning:  #550-D: variable "Ch" was set but never used
-  static uint8_t Cx=0,Cy=0,Cw=0,Ch=0;
-../Core/Src/main.c: 6 warnings, 0 errors
-compiling i2c.c...
-compiling exti.c...
-..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\Core\Src\EXTI\exti.c(25): warning:  #1-D: last line of file ends without a newline
-  // }
-..\Core\Src\EXTI\exti.c: 4 warnings, 0 errors
-compiling inv_mpu_dmp_motion_driver.c...
-compiling inv_mpu.c...
+..\Core\Src\SYS\sys.h(61): warning:  #1-D: last line of file ends without a newline
+  ******************************************************************************/
+..\Core\Src\SYS\sys.h(61): warning:  #1-D: last line of file ends without a newline
+  ******************************************************************************/
+../Core/Src/main.c: 2 warnings, 0 errors
+compiling tim.c...
+..\Core\Src\SYS\sys.h(61): warning:  #1-D: last line of file ends without a newline
+  ******************************************************************************/
+..\Core\Src\SYS\sys.h(61): warning:  #1-D: last line of file ends without a newline
+  ******************************************************************************/
+../Core/Src/tim.c: 2 warnings, 0 errors
 compiling motor.c...
-..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
-  #endif
+..\Core\Src\SYS\sys.h(61): warning:  #1-D: last line of file ends without a newline
+  ******************************************************************************/
+..\Core\Src\SYS\sys.h(61): warning:  #1-D: last line of file ends without a newline
+  ******************************************************************************/
 ..\Core\Src\MOTOR\motor.c(11): warning:  #188-D: enumerated type mixed with another type
       HAL_GPIO_WritePin(
 PIOB, 
@@ -120,47 +98,41 @@ PIO_PIN_13, SET);
           HAL_GPIO_WritePin(
 PIOB, 
 PIO_PIN_12, RESET);
-..\Core\Src\MOTOR\motor.c(86): warning:  #1-D: last line of file ends without a newline
-  	
-..\Core\Src\MOTOR\motor.c: 15 warnings, 0 errors
-compiling stm32f1xx_hal_gpio_ex.c...
-compiling stm32f1xx_hal.c...
+..\Core\Src\MOTOR\motor.c: 14 warnings, 0 errors
+compiling exti.c...
+..\Core\Src\SYS\sys.h(61): warning:  #1-D: last line of file ends without a newline
+  ******************************************************************************/
+..\Core\Src\SYS\sys.h(61): warning:  #1-D: last line of file ends without a newline
+  ******************************************************************************/
+..\Core\Src\EXTI\exti.c: 2 warnings, 0 errors
 compiling stm32f1xx_it.c...
-..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
-  #endif
+..\Core\Src\SYS\sys.h(61): warning:  #1-D: last line of file ends without a newline
+  ******************************************************************************/
+..\Core\Src\SYS\sys.h(61): warning:  #1-D: last line of file ends without a newline
+  ******************************************************************************/
 ../Core/Src/stm32f1xx_it.c: 2 warnings, 0 errors
-compiling stm32f1xx_ll_gpio.c...
-compiling stm32f1xx_hal_i2c.c...
-compiling tim.c...
-..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\Core\Src\EXTI\exti.h(6): warning:  #1-D: last line of file ends without a newline
-  #endif
-../Core/Src/tim.c: 2 warnings, 0 errors
+compiling control.c...
+..\Core\Src\SYS\sys.h(61): warning:  #1-D: last line of file ends without a newline
+  ******************************************************************************/
+..\Core\Src\SYS\sys.h(61): warning:  #1-D: last line of file ends without a newline
+  ******************************************************************************/
+..\Core\Src\CONTROL\control.c: 2 warnings, 0 errors
+compiling oled.c...
+..\Core\Src\SYS\sys.h(61): warning:  #1-D: last line of file ends without a newline
+  ******************************************************************************/
+..\Core\Src\SYS\sys.h(61): warning:  #1-D: last line of file ends without a newline
+  ******************************************************************************/
+..\Core\Src\OLED\oled.c: 2 warnings, 0 errors
 compiling usart.c...
-compiling stm32f1xx_hal_rcc.c...
-compiling stm32f1xx_hal_msp.c...
-compiling stm32f1xx_hal_rcc_ex.c...
-compiling stm32f1xx_hal_gpio.c...
-compiling stm32f1xx_hal_dma.c...
-compiling stm32f1xx_hal_cortex.c...
-compiling stm32f1xx_hal_pwr.c...
-compiling stm32f1xx_hal_exti.c...
-compiling system_stm32f1xx.c...
-compiling stm32f1xx_ll_exti.c...
-compiling stm32f1xx_ll_rcc.c...
-compiling stm32f1xx_hal_flash_ex.c...
-compiling stm32f1xx_hal_flash.c...
-compiling stm32f1xx_ll_utils.c...
-compiling stm32f1xx_hal_uart.c...
-compiling stm32f1xx_hal_tim_ex.c...
-compiling stm32f1xx_hal_tim.c...
+..\Core\Src\SYS\sys.h(61): warning:  #1-D: last line of file ends without a newline
+  ******************************************************************************/
+..\Core\Src\SYS\sys.h(61): warning:  #1-D: last line of file ends without a newline
+  ******************************************************************************/
+../Core/Src/usart.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=26956 RO-data=4900 RW-data=152 ZI-data=2720  
+Program Size: Code=30208 RO-data=4896 RW-data=156 ZI-data=2772  
 FromELF: creating hex file...
-"smartCar\smartCar.axf" - 0 Error(s), 32 Warning(s).
+"smartCar\smartCar.axf" - 0 Error(s), 30 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -183,7 +155,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:4.3.0
-Build Time Elapsed:  00:00:18
+Build Time Elapsed:  00:00:05
 </pre>
 </body>
 </html>

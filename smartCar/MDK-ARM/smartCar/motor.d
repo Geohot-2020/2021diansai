@@ -23,6 +23,8 @@ smartcar\motor.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_exti.h
 smartcar\motor.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h
 smartcar\motor.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_ex.h
 smartcar\motor.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h
+smartcar\motor.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h
+smartcar\motor.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
 smartcar\motor.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 smartcar\motor.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 smartcar\motor.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h
@@ -42,10 +44,10 @@ smartcar\motor.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_utils.h
 smartcar\motor.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_pwr.h
 smartcar\motor.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_dma.h
 smartcar\motor.o: ..\Core\Src\OLED\oled.h
+smartcar\motor.o: ..\Core\Src\SYS\sys.h
 smartcar\motor.o: ../Core/Inc/gpio.h
 smartcar\motor.o: ..\Core\Src\MOTOR\motor.h
 smartcar\motor.o: ..\Core\Src\CONTROL\control.h
-smartcar\motor.o: ..\Core\Src\SYS\sys.h
 smartcar\motor.o: ..\Core\Src\CONTROL\control.h
 smartcar\motor.o: ../Core/Inc/tim.h
 smartcar\motor.o: ../Core/Inc/i2c.h
@@ -57,6 +59,7 @@ smartcar\motor.o: ..\Core\Src\MPU6050\eMPL\inv_mpu_dmp_motion_driver.h
 smartcar\motor.o: ../Core/Inc/stm32f1xx_it.h
 smartcar\motor.o: ..\Core\Src\EXTI\exti.h
 smartcar\motor.o: ..\Core\Src\EXTI\exti.h
+smartcar\motor.o: ../Core/Inc/adc.h
 smartcar\motor.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\string.h
 smartcar\motor.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 smartcar\motor.o: E:\keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

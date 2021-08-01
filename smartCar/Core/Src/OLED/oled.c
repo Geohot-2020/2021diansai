@@ -251,7 +251,22 @@ void OLED_refresh_gram(void)
 
 
 
-
+/*********************************************************************************
+ * 函数功能： 屏幕显示
+ * 入口参数： 无
+ * 返回值：   无
+**********************************************************************************/
+void OLED_show(void)
+{
+  OLED_operate_gram(PEN_CLEAR);
+  OLED_printf(0,0,"encoderL: %d",enc1);	
+  OLED_printf(1,0,"encoderR: %d",enc2);	
+  OLED_printf(2,0,"Cx: %d,Cy: %d",Cx,Cy);
+  OLED_printf(3,0,"pitch: %f",pitch);
+//   OLED_printf(4,0,"Cw: %d,Ch: %d",Cw,Ch);
+  OLED_printf(4,0,"Light_Sens: %d",Light_Sens);
+  OLED_refresh_gram();	//oled
+}
 
 
 

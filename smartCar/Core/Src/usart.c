@@ -22,6 +22,7 @@
 
 /* USER CODE BEGIN 0 */
 #include <stdio.h>
+#include "sys.h"
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart1;
@@ -223,6 +224,106 @@ int fgetc(FILE *f)
   HAL_UART_Receive(&huart1, &ch, 1, 0xffff);
   return ch;
 }
+
+/*********************************************************************************
+ * 函数功能： openmv串口中断
+ * 入口参数： 串口名，usart2
+ * 返回值：   无
+**********************************************************************************/
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(huart);
+  /* NOTE: This function Should not be modified, when the callback is needed,
+           the HAL_UART_TxCpltCallback could be implemented in the user file
+   */
+
+
+    // printf("\n\r%d\r\n",acom_data);
+    // HAL_UART_Receive_IT(&huart2, (uint8_t *)&acom_data, 1);   //再开启接收中断
+    uint8_t i;
+    
+    if(Uart2_RxState==0&&acom_data==0x2C)   //0X2c帧头
+    {
+      Uart2_RxState=1;
+      Uart2_RxBuffer1[Uart2_RxCounter1++] = acom_data;
+      // printf("0x2c: %x  ",acom_data);
+      HAL_UART_Receive_IT(&huart2, (uint8_t *)&acom_data, 1);   //再开启接收中断
+      
+    }
+    else if(Uart2_RxState==1&&acom_data==0x12)    //0x12帧头
+    {
+      Uart2_RxState=2;
+      Uart2_RxBuffer1[Uart2_RxCounter1++] = acom_data;
+      // printf("0x12: %x  ",acom_data);
+      HAL_UART_Receive_IT(&huart2, (uint8_t *)&acom_data, 1);   //再开启接收中断
+      
+    }
+    else if(Uart2_RxState==2)
+    {
+      Uart2_RxBuffer1[Uart2_RxCounter1++] = acom_data;
+      // printf("ex: %x  ",acom_data);
+      HAL_UART_Receive_IT(&huart2, (uint8_t *)&acom_data, 1);   //再开启接收中断
+
+      if(Uart2_RxCounter1>=10||acom_data == 0x5B)   //接收数据满了，接收数据结束
+      {
+          Uart2_RxState=3;
+          Uart2_RxFlag1=1;
+          Cx=Uart2_RxBuffer1[Uart2_RxCounter1-5];
+          Cy=Uart2_RxBuffer1[Uart2_RxCounter1-4];
+          Cw=Uart2_RxBuffer1[Uart2_RxCounter1-3];
+          Ch=Uart2_RxBuffer1[Uart2_RxCounter1-2];
+          Cx=Cx+Cw;
+          // printf("ok: %x  ",acom_data);
+          HAL_UART_Receive_IT(&huart2, (uint8_t *)&acom_data, 1);   //再开启接收中断
+
+      }
+    }
+
+    else if(Uart2_RxState==3)   //检查是否接收到结束标志
+    {
+      if(Uart2_RxBuffer1[Uart2_RxCounter1-1] == 0x5B)
+      {
+
+        ///////////////////////////////////test/////////////////////////
+        if(Uart2_RxFlag1)
+        {
+          printf("cx:%d, cy:%d",Cx,Cy);
+        // printf("aab");
+        }
+        ///////////////////////////////////////////////////////////////
+        Uart2_RxFlag1=0;
+        Uart2_RxCounter1=0;
+        Uart2_RxState=0;
+        HAL_UART_Receive_IT(&huart2, (uint8_t *)&acom_data, 1);   //再开启接收中断
+      }
+      else  //接收错误
+      {
+        Uart2_RxState=0;
+        Uart2_RxCounter1=0;
+        for(i=0;i<10;i++)
+          Uart2_RxBuffer1[i]=0x00;  //清零存放数据数组
+        printf("error1");
+        HAL_UART_Receive_IT(&huart2, (uint8_t *)&acom_data, 1);   //再开启接收中断
+      }
+    }
+    
+    else  //接收异常
+    {
+      Uart2_RxState=0;
+      Uart2_RxCounter1=0;
+      for(i=0;i<10;i++)
+        Uart2_RxBuffer1[i]=0x00;  //清零存放数据数组
+      printf("error2");
+      HAL_UART_Receive_IT(&huart2, (uint8_t *)&acom_data, 1);   //再开启接收中断
+    }
+
+
+
+  
+}
+
 
 /* USER CODE END 1 */
 

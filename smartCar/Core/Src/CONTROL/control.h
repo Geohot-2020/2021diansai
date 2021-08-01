@@ -22,5 +22,5 @@ void EXTI9_5_IRQHandler(void);
 int balance_UP(float Angle,float Mechanical_balance,float Gyro);
 int velocity(int encoder_left,int encoder_right,int target);
 int turn(int encoder_left,int encoder_right,float gyro,int target);
-
+int seek_Beacon(uint8_t x);
 #endif

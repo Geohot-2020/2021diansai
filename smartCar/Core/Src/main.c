@@ -19,6 +19,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
 #include "i2c.h"
 #include "tim.h"
 #include "usart.h"
@@ -27,20 +28,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "sys.h"
-#include "stm32f1xx_hal.h"
-#include "usart.h"
-#include "oled.h"
-#include "gpio.h"
-#include "motor.h"
-#include "control.h"
-#include "tim.h"
-#include "i2c.h"
-#include "IIC.h"
-#include "mpu6050.h"
-#include "inv_mpu.h"
-#include "inv_mpu_dmp_motion_driver.h"
-#include "stm32f1xx_it.h"
-#include "exti.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -73,6 +60,7 @@ char RxBuffer[RXBUFFERSIZE];
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 
+void OLED_show(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -85,20 +73,19 @@ short aacx,aacy,aacz;                                 //加速度传感器原始
 short gyrox,gyroy,gyroz;                              //陀螺仪原始数据
 uint32_t enc1,enc2;                                   //左右编码器的脉冲计数
 int Moto1=0,Moto2=0;                                  //计算出来的最终结果赋值给电机的PWM
-int Balance_Pwm,Velocity_Pwm,Turn_Pwm;                //直立,速度，转向PWM
+int Balance_Pwm=0,Velocity_Pwm=0,Turn_Pwm=0,Seek_Pwm=0;                //直立,速度，转向,差速循迹PWM
 float Mechanical_angle=0;                             //机械中值
-
+uint16_t ADC_Value=0;                                 //PA4 ADC1_IN5 AD采样值
+uint8_t Light_Sens=0;                                 //0-100：0，最暗；100，最亮
 /* OEPNMV用 */
 ///////////////////////////////////
-uint8_t com_data; 
-uint8_t acom_data;
+uint8_t acom_data;                                    //每位接收的数据            
+uint8_t Uart2_RxCounter1=0;                           //接收缓冲计数
+uint16_t Uart2_RxBuffer1[10]={0};                     //接收缓冲数组
+uint8_t Uart2_RxState = 0;	                          //接收状态||1：第一个帧头0x2C；2：第二个帧头0x12；3：帧尾0x5B
+uint8_t Uart2_RxFlag1 = 0;                            //接收状态||成功1，失败0
 
-static uint8_t Uart2_RxCounter1=0;
-static uint16_t Uart2_RxBuffer1[10]={0};
-static uint8_t Uart2_RxState = 0;	
-static uint8_t Uart2_RxFlag1 = 0;
-
-static uint8_t Cx=0,Cy=0,Cw=0,Ch=0;
+uint16_t Cx=160,Cy=0,Cw=0,Ch=0;                       //采集的图像信息
 ////////////////////////////////////
 
 
@@ -139,17 +126,25 @@ int main(void)
   MX_I2C1_Init();
   MX_TIM3_Init();
   MX_USART2_UART_Init();
+  MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
+
+  ///////////////////////////////////////////初始化///////////////////////////////////////////////////
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1); 
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4); //使能PWM输出
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);                     //===使能PWM输出
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL); 
-  HAL_TIM_Encoder_Start(&htim4,TIM_CHANNEL_ALL);  //打开encoder
-  Motor_Init();
-  MPU_Init();   //MPU6050
-  mpu_dmp_init();   //dmp初始化
-  HAL_UART_Receive_IT(&huart2, (uint8_t *)&acom_data, 1);
-  OLED_init();  //OLED
-  HAL_TIM_Base_Start_IT(&htim3);    //打开核心控制
+  HAL_TIM_Encoder_Start(&htim4,TIM_CHANNEL_ALL);                //===打开encoder
+  Motor_Init();                                                 //===电机初始化
+  MPU_Init();                                                   //===MPU6050初始化
+  mpu_dmp_init();                                               //===dmp初始化
+  HAL_UART_Receive_IT(&huart2, (uint8_t *)&acom_data, 1);       //===openmv接收串口初始化
+  HAL_ADCEx_Calibration_Start(&hadc1);                          //===AD校准
+  OLED_init();                                                  //===OLED初始化
+  HAL_TIM_Base_Start_IT(&htim3);                                //===打开核心控制
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  OLED_operate_gram(PEN_CLEAR);
+  OLED_refresh_gram();	                                        //===oled清屏，刷屏
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -157,29 +152,14 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+    
     /* USER CODE BEGIN 3 */
-    
-    // HAL_Delay(10);
-    
-    // enc1=-Read_Encoder(2);
-    // enc2=Read_Encoder(4);
-		OLED_operate_gram(PEN_CLEAR);
-		OLED_printf(0,0,"encoderL: %d",enc1);	
-		OLED_printf(1,0,"encoderR: %d",enc2);	
-    OLED_printf(2,0,"Cx: %d,Cy: %d",Cx,Cy);
-    OLED_printf(3,0,"pitch: %f",pitch);
-    
-    // Balance_Pwm=balance_UP(pitch, Mechanical_angle, gyroy);     //直立环PID控制
-    // Moto1=Balance_Pwm;
-    // Moto2=Balance_Pwm;      //计算左右轮电机最终PWM
-    // Lock_Pwm();             //限幅
-    // Set_Pwm(Moto1,Moto2);   //赋值驱动
-    // printf("\n\rax:%d, ay:%d, az:%d\r\n",aacx,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  aacy,aacz);
-    // printf("\n\rgx:%d, gy:%d, gz:%d\r\n",gyrox,gyroy,gyroz);
-    
-
-    OLED_refresh_gram();	//oled
+    /* ADC */
+    HAL_ADC_Start(&hadc1);                  //启动ADC转换
+    HAL_ADC_PollForConversion(&hadc1,50);   //等待转换完成，50为最大等待时间，单位为ms
+    /* oled */
+    OLED_show();
+    HAL_Delay(20);
   }
   /* USER CODE END 3 */
 }
@@ -192,6 +172,7 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
@@ -220,32 +201,18 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC;
+  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV6;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+  {
+    Error_Handler();
+  }
 }
 
 /* USER CODE BEGIN 4 */
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-  if (htim == (&htim3))
-  {
-    
-    mpu_dmp_get_data(&pitch, &roll, &yaw);	//必须要用while等待，才能读取成功
-		MPU_Get_Accelerometer(&aacx,&aacy, &aacz);		//得到加速度传感器数据
-		MPU_Get_Gyroscope(&gyrox, &gyroy, &gyroz);		//得到陀螺仪数据
-    printf("\n\r%f\r\n", pitch);							//串口1输出pitch信息
-    enc1=-Read_Encoder(2);
-    enc2=Read_Encoder(4);
-    printf("\n\renc1: %d, enc2: %d\r\n",enc1,enc2);
-    Balance_Pwm=balance_UP(pitch,Mechanical_angle,gyroy);
 
-    Moto1=Balance_Pwm;
-    Moto2=Balance_Pwm;
-    Lock_Pwm();
-    Set_Pwm(Moto1,Moto2);
-  }
-
-}
-
+/* 备用PB5外部中断，以防定时器资源不足 */
 
 // void EXTI9_5_IRQHandler(void) 
 // {
@@ -257,55 +224,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 //   }
 // }
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(huart);
-  /* NOTE: This function Should not be modified, when the callback is needed,
-           the HAL_UART_TxCpltCallback could be implemented in the user file
-   */
-    
-    if(Uart2_RxState==0&&acom_data==0x2C)   //0X2c帧头
-    {
-      Uart2_RxState=1;
-      Uart2_RxBuffer1[Uart2_RxCounter1++] = acom_data;
-    }
-    else if(Uart2_RxState==1&&acom_data==0x12)    //0x12帧头
-    {
-      Uart2_RxState=2;
-      Uart2_RxBuffer1[Uart2_RxCounter1++] = acom_data;
-    }
-    else if(Uart2_RxState==2)
-    {
-      Uart2_RxBuffer1[Uart2_RxCounter1++] = acom_data;
-      
-      if(Uart2_RxCounter1>=10||acom_data == 0x5B)   //接收数据满了，接收数据结束
-      {
-          Uart2_RxState=3;
-          Uart2_RxFlag1=1;
-          Cx=Uart2_RxBuffer1[Uart2_RxCounter1-5];
-          Cy=Uart2_RxBuffer1[Uart2_RxCounter1-4];
-          Cw=Uart2_RxBuffer1[Uart2_RxCounter1-3];
-          Ch=Uart2_RxBuffer1[Uart2_RxCounter1-2];
 
-      }
-    }
-
-    else if(Uart2_RxState==3)   //检查是否接收到结束标志
-    {
-      if(Uart2_RxBuffer1[Uart2_RxCounter1-1] == 0x5B)
-      {
-        Uart2_RxFlag1=0;
-        Uart2_RxCounter1=0;
-        Uart2_RxState=0;
-
-        HAL_UART_Receive_IT(&huart2, (uint8_t *)&acom_data, 1);   //再开启接收中断
-      }
-    }
-
-
-  
-}
 
 /* USER CODE END 4 */
 
